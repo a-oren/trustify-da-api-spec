@@ -41,6 +41,13 @@ paths:
           type: boolean
           default: true
         example: true
+      - name: cves
+        in: query
+        description: List of CVEs to include in the report
+        required: false
+        schema:
+          type: string
+        example: CVE-2026-1234,CVE-2026-5678
       requestBody:
         required: true
         description: Dependency graph in SBOM format
@@ -107,6 +114,13 @@ paths:
             type: boolean
             default: true
           example: true
+        - name: cves
+          in: query
+          description: List of CVEs to include in the report
+          required: false
+          schema:
+            type: string
+          example: CVE-2026-1234,CVE-2026-5678
       requestBody:
         required: true
         description: A dictionary of package URLs to dependency graphs in SBOM format
