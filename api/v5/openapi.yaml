@@ -43,7 +43,7 @@ paths:
         example: true
       - name: cves
         in: query
-        description: List of CVEs to include in the report
+        description: Comma-separated list of CVE IDs to filter the report. When provided, only matching CVEs are included. Defaults to all CVEs found.
         required: false
         schema:
           type: string
@@ -116,7 +116,7 @@ paths:
           example: true
         - name: cves
           in: query
-          description: List of CVEs to include in the report
+          description: Comma-separated list of CVE IDs to filter the report. When provided, only matching CVEs are included. Defaults to all CVEs found.
           required: false
           schema:
             type: string
