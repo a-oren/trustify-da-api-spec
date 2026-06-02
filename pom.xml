@@ -37,7 +37,7 @@
     <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
     <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
     <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
-    <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
+    <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
     <build-helper-maven-plugin.version>3.4.0</build-helper-maven-plugin.version>
     <extra-enforcer-rules.version>1.6.2</extra-enforcer-rules.version>
     <flatten-maven-plugin.version>1.4.1</flatten-maven-plugin.version>
@@ -602,6 +602,14 @@ limitations under the License.]]>
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
+        <configuration>
+          <!-- OpenAPI models under api.v5 are generated; only hand-written sources are measured. -->
+          <includes>
+            <include>io/github/guacsec/trustifyda/api/PackageRef*</include>
+            <include>io/github/guacsec/trustifyda/api/serialization/**</include>
+            <include>io/github/guacsec/trustifyda/api/v5/SeverityUtils*</include>
+          </includes>
+        </configuration>
         <executions>
           <execution>
             <id>prepare-agent</id>
