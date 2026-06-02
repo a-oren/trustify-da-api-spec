@@ -18,6 +18,8 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     name: Tests
+    permissions:
+      id-token: write
     strategy:
       matrix:
         java: [17, 21]
@@ -31,6 +33,15 @@ jobs:
           distribution: 'temurin'
       - name: Build with Maven
         run: mvn -B verify --file pom.xml
+      - name: Upload coverage to Codecov
+        if: matrix.java == 21
+        uses: codecov/codecov-action@v5
+        with:
+          use_oidc: true
+          flags: unit-tests
+          files: target/site/jacoco/jacoco.xml
+          slug: guacsec/trustify-da-api-spec
+          fail_ci_if_error: false
 
   openapi-lint-checks:
     runs-on: ubuntu-latest
