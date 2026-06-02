@@ -1,0 +1,55 @@
+/*
+ * Copyright 2023-2025 Trustify Dependency Analytics Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package io.github.guacsec.trustifyda.api.v5;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
+
+class SeverityUtilsTest {
+
+  @Test
+  void fromValueReturnsNullForNullInput() {
+    assertNull(SeverityUtils.fromValue(null));
+  }
+
+  @Test
+  void fromValueIsCaseInsensitive() {
+    assertEquals(Severity.HIGH, SeverityUtils.fromValue("high"));
+    assertEquals(Severity.CRITICAL, SeverityUtils.fromValue("CRITICAL"));
+  }
+
+  @Test
+  void fromValueRejectsUnknownSeverity() {
+    assertThrows(IllegalArgumentException.class, () -> SeverityUtils.fromValue("unknown"));
+  }
+
+  @Test
+  void fromScoreMapsCvssRanges() {
+    assertEquals(Severity.LOW, SeverityUtils.fromScore(0));
+    assertEquals(Severity.LOW, SeverityUtils.fromScore(3.9f));
+    assertEquals(Severity.MEDIUM, SeverityUtils.fromScore(4));
+    assertEquals(Severity.MEDIUM, SeverityUtils.fromScore(6.9f));
+    assertEquals(Severity.HIGH, SeverityUtils.fromScore(7));
+    assertEquals(Severity.HIGH, SeverityUtils.fromScore(8.9f));
+    assertEquals(Severity.CRITICAL, SeverityUtils.fromScore(9));
+    assertEquals(Severity.CRITICAL, SeverityUtils.fromScore(10));
+  }
+}

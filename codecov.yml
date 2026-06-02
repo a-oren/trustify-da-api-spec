@@ -1,0 +1,25 @@
+coverage:
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 1%
+        informational: true
+    patch:
+      default:
+        target: auto
+        threshold: 1%
+        informational: true
+
+# JaCoCo (pom.xml) already omits generated v5 models from jacoco.xml; this backs up
+# Codecov path resolution when reports reference generated source paths.
+ignore:
+  - "target/generated-sources/**"
+
+flags:
+  unit-tests:
+    carryforward: true
+
+comment:
+  layout: "reach,diff,flags,files"
+  behavior: default

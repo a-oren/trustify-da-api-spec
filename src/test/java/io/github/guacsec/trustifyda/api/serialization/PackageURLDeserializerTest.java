@@ -52,4 +52,10 @@ class PackageURLDeserializerTest {
     assertThrows(JsonProcessingException.class,
         () -> mapper.readValue("\"not-a-valid-purl\"", PackageRef.class));
   }
+
+  @Test
+  void deserializeRejectsNonStringJson() {
+    assertThrows(JsonProcessingException.class,
+        () -> mapper.readValue("{\"type\":\"maven\"}", PackageRef.class));
+  }
 }
