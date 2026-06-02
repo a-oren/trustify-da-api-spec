@@ -18,10 +18,13 @@
 package io.github.guacsec.trustifyda.api.serialization;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.github.packageurl.PackageURL;
 
 import io.github.guacsec.trustifyda.api.PackageRef;
 
@@ -42,5 +45,15 @@ public class PackageURLSerializerTest {
         assertEquals("opensuse-tumbleweed", pkgRef.purl().getQualifiers().get("distro"));
         assertEquals("i386", pkgRef.purl().getQualifiers().get("arch"));
         assertEquals("\"" + rpmPkg + "\"", mapper.writeValueAsString(pkgRef));
+    }
+
+    @Test
+    void serializesPackageUrlDirectly() throws Exception {
+        var mapperWithSerializer = new ObjectMapper()
+            .registerModule(new SimpleModule().addSerializer(
+                PackageURL.class, new PackageURLSerializer()));
+        var purl = new PackageURL("pkg:maven/org.example/artifact@1.0.0");
+        assertEquals("\"pkg:maven/org.example/artifact@1.0.0\"",
+            mapperWithSerializer.writeValueAsString(purl));
     }
 }
