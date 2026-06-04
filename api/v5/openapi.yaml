@@ -5,7 +5,7 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-  version: 5.1.0
+  version: 5.2.0
 servers:
   - url: /api/v5
     description: API v5 endpoint
@@ -386,6 +386,10 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/Source'
+        recommendations:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/RecommendationSource'
     ProviderStatus:
       type: object
       properties:
@@ -450,6 +454,8 @@ components:
         recommendations:
           type: integer
           default: 0
+          deprecated: true
+          description: "Deprecated: Use provider-level recommendations map in ProviderReport instead."
         unscanned:
           type: integer
           default: 0
@@ -471,7 +477,8 @@ components:
           items:
             $ref: '#/components/schemas/TransitiveDependencyReport'
         recommendation:
-          description: Trusted Content recommendation that is not related to any security vulnerability
+          description: "Deprecated: Use provider-level recommendations map in ProviderReport instead. Trusted Content recommendation that is not related to any security vulnerability."
+          deprecated: true
           allOf:
             - $ref: '#/components/schemas/PackageRef'
         highestVulnerability:
@@ -571,6 +578,38 @@ components:
           $ref: '#/components/schemas/PackageRef'
         reason:
           type: string
+    RecommendationSource:
+      type: object
+      description: Recommendation data from a specific recommendation source
+      properties:
+        status:
+          type: string
+          description: Health status of the recommendation source
+        summary:
+          $ref: '#/components/schemas/RecommendationSummary'
+        dependencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecommendationReport'
+    RecommendationSummary:
+      type: object
+      description: Summary of recommendations from a recommendation source
+      properties:
+        total:
+          type: integer
+          default: 0
+    RecommendationReport:
+      type: object
+      description: A recommendation mapping a dependency to its recommended alternative
+      properties:
+        ref:
+          description: The original dependency being analyzed
+          allOf:
+            - $ref: '#/components/schemas/PackageRef'
+        recommendation:
+          description: The recommended alternative package
+          allOf:
+            - $ref: '#/components/schemas/PackageRef'
     LicensesRequest:
       type: object
       description: List of package URLs (purls) to fetch license information for
