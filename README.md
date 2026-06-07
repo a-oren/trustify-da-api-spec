@@ -20,7 +20,7 @@ The packages are published to the GitHub maven repository. Make sure to add it t
 <dependency>
   <groupId>io.github.guacsec</groupId>
   <artifactId>trustify-da-api-model</artifactId>
-  <version>2.0.8</version>
+  <version>2.0.9-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -29,5 +29,5 @@ The packages are published to the GitHub maven repository. Make sure to add it t
 Add it to your project as follows:
 
 ```bash
-npm install @guacsec/trustify-da-api-model@2.0.8
+npm install @guacsec/trustify-da-api-model@2.0.9-SNAPSHOT
 ```
