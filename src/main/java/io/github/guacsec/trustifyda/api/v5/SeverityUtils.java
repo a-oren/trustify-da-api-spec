@@ -27,7 +27,10 @@ public class SeverityUtils {
   }
 
   // From: https://nvd.nist.gov/vuln-metrics/cvss
-  public static Severity fromScore(float score) {
+  public static Severity fromScore(Float score) {
+    if (score == null) {
+      return Severity.UNKNOWN;
+    }
     if (score < 4) {
       return Severity.LOW;
     }

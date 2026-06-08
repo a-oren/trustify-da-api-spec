@@ -448,6 +448,9 @@ components:
         low:
           type: integer
           default: 0
+        unknown:
+          type: integer
+          default: 0
         remediations:
           type: integer
           default: 0
@@ -491,6 +494,7 @@ components:
         - HIGH
         - MEDIUM
         - LOW
+        - UNKNOWN
     Issue:
       type: object
       properties:
