@@ -37,8 +37,14 @@ class SeverityUtilsTest {
   }
 
   @Test
-  void fromValueRejectsUnknownSeverity() {
-    assertThrows(IllegalArgumentException.class, () -> SeverityUtils.fromValue("unknown"));
+  void fromValueParsesUnknownSeverity() {
+    assertEquals(Severity.UNKNOWN, SeverityUtils.fromValue("unknown"));
+    assertEquals(Severity.UNKNOWN, SeverityUtils.fromValue("UNKNOWN"));
+  }
+
+  @Test
+  void fromValueRejectsInvalidSeverity() {
+    assertThrows(IllegalArgumentException.class, () -> SeverityUtils.fromValue("invalid"));
   }
 
   @Test
