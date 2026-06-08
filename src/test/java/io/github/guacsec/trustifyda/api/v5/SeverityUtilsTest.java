@@ -48,14 +48,19 @@ class SeverityUtilsTest {
   }
 
   @Test
+  void fromScoreReturnsUnknownForNullInput() {
+    assertEquals(Severity.UNKNOWN, SeverityUtils.fromScore(null));
+  }
+
+  @Test
   void fromScoreMapsCvssRanges() {
-    assertEquals(Severity.LOW, SeverityUtils.fromScore(0));
+    assertEquals(Severity.LOW, SeverityUtils.fromScore(0f));
     assertEquals(Severity.LOW, SeverityUtils.fromScore(3.9f));
-    assertEquals(Severity.MEDIUM, SeverityUtils.fromScore(4));
+    assertEquals(Severity.MEDIUM, SeverityUtils.fromScore(4f));
     assertEquals(Severity.MEDIUM, SeverityUtils.fromScore(6.9f));
-    assertEquals(Severity.HIGH, SeverityUtils.fromScore(7));
+    assertEquals(Severity.HIGH, SeverityUtils.fromScore(7f));
     assertEquals(Severity.HIGH, SeverityUtils.fromScore(8.9f));
-    assertEquals(Severity.CRITICAL, SeverityUtils.fromScore(9));
-    assertEquals(Severity.CRITICAL, SeverityUtils.fromScore(10));
+    assertEquals(Severity.CRITICAL, SeverityUtils.fromScore(9f));
+    assertEquals(Severity.CRITICAL, SeverityUtils.fromScore(10f));
   }
 }
