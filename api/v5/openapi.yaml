@@ -5,7 +5,7 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-  version: 5.2.0
+  version: 5.3.0
 servers:
   - url: /api/v5
     description: API v5 endpoint
@@ -539,6 +539,16 @@ components:
           type: array
           items:
             type: string
+        remediations:
+          type: array
+          description: Detailed remediation information from vulnerability advisories
+          items:
+            $ref: '#/components/schemas/RemediationInfo'
+        versionRanges:
+          type: array
+          description: Affected version ranges from vulnerability advisories
+          items:
+            $ref: '#/components/schemas/VersionRange'
         trustedContent:
           type: object
           properties:
@@ -548,6 +558,47 @@ components:
               type: string
             justification:
               type: string
+    RemediationCategory:
+      type: string
+      description: Category of a remediation action
+      enum:
+        - VENDOR_FIX
+        - WORKAROUND
+        - MITIGATION
+        - NO_FIX_PLANNED
+        - NONE_AVAILABLE
+        - WILL_NOT_FIX
+    RemediationInfo:
+      type: object
+      description: Detailed remediation information from a vulnerability advisory
+      properties:
+        category:
+          $ref: '#/components/schemas/RemediationCategory'
+        details:
+          type: string
+          description: Human-readable remediation details
+        url:
+          type: string
+          description: URL with more information about the remediation
+    VersionRange:
+      type: object
+      description: Affected version range from a vulnerability advisory. Fields present depend on the range type - Full (all fields), Left (scheme and low bound), Right (scheme and high bound), or Unbounded (empty).
+      properties:
+        versionSchemeId:
+          type: string
+          description: Version scheme identifier (e.g. semver, rpm, generic)
+        lowVersion:
+          type: string
+          description: Lower bound version
+        lowInclusive:
+          type: boolean
+          description: Whether the lower bound is inclusive
+        highVersion:
+          type: string
+          description: Upper bound version
+        highInclusive:
+          type: boolean
+          description: Whether the upper bound is inclusive
     CvssVector:
       type: object
       properties:
